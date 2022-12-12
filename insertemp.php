@@ -85,7 +85,7 @@ $result2 = mysqli_query($sql1, $query2);
       </div>
       <div class="mb-3">
         <label for="prefixemp" class="form-label">เลือกคำนำหน้าชื่อ</label>
-        <select class="form-select" aria-label="Default select example" name="prefixemp">
+        <select class="form-select" aria-label="Default select example" name="prefixemp"required>
           <option value="">-กรุณาเลือก-</option>
           <?php foreach ($result1 as $results) { ?>
             <option value="<?php echo $results["nameprefix"]; ?>">
@@ -112,7 +112,7 @@ $result2 = mysqli_query($sql1, $query2);
       </div>
       <div class="mb-3">
         <label for="tyemp" class="form-label">เลือกประเภทพนักงาน</label>
-        <select class="form-select" aria-label="Default select example" name="tyemp">
+        <select class="form-select" aria-label="Default select example" name="tyemp"required>
         <option value="">-กรุณาเลือก-</option>
           <?php foreach ($result2 as $results) { ?>
             <option value="<?php echo $results["demp"]; ?>">

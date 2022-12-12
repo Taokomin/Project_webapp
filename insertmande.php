@@ -65,7 +65,7 @@ function increaseId($idmande)
       </div>
       <div class="mb-3">
         <label for="mandeunit" class="form-label">หน่วยนับ</label>
-        <select class="form-select" aria-label="Default select example" name="mandeunit">
+        <select class="form-select" aria-label="Default select example" name="mandeunit" required>
           <option value="">-กรุณาเลือก-</option>
           <?php foreach ($result1 as $results) { ?>
             <option value="<?php echo $results["unitt"]; ?>">
@@ -76,7 +76,7 @@ function increaseId($idmande)
       </div>
       <div class="mb-3">
         <label for="tmqmande" class="form-label">ประเภทวัสดุและอุปกรณ์</label>
-        <select class="form-select" aria-label="Default select example" name="tmqmande">
+        <select class="form-select" aria-label="Default select example" name="tmqmande" required>
           <option selected>-กรุณาเลือก-</option>
           <option value="ใช้แล้วหมดไป">ใช้แล้วหมดไป</option>
           <option value="ใช้แล้วไม่หมดไป">ใช้แล้วไม่หมดไป</option>

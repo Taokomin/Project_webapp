@@ -58,7 +58,7 @@ function increaseId($idctm)
       </div>
       <div class="mb-3">
         <label for="prefixctm" class="form-label">เลือกคำนำหน้าชื่อ</label>
-        <select class="form-select" aria-label="Default select example" name="prefixctm">
+        <select class="form-select" aria-label="Default select example" name="prefixctm" required>
         <option value="">-กรุณาเลือก-</option>
         <?php foreach ($result1 as $results) { ?>
         <option value = "<?php echo $results["nameprefix"]; ?>">

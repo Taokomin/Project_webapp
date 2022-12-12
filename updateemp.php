@@ -58,7 +58,7 @@ if (isset($_POST['updateemp'])) {
         </div>
         <div class="mb-3">
           <label for="prefixemp" class="form-label">เลือกคำนำหน้าชื่อ</label>
-          <select class="form-select" aria-label="Default select example" name="prefixemp" value="<?php echo $row['prefixemp']; ?>" required>
+          <select class="form-select" aria-label="Default select example" type="text" name="prefixemp" value="<?php echo $row['prefixemp']; ?>" required>
             <option value="">-กรุณาเลือก-</option>
             <?php foreach ($result1 as $results) { ?>
               <option value="<?php echo $results["nameprefix"]; ?>">
@@ -85,7 +85,7 @@ if (isset($_POST['updateemp'])) {
         </div>
         <div class="mb-3">
           <label for="tyemp" class="form-label">เลือกประเภทพนักงาน</label>
-          <select class="form-select" aria-label="Default select example" name="tyemp" value="<?php echo $row['prefixemp']; ?>" required>
+          <select class="form-select" aria-label="Default select example" type="text" name="tyemp" value="<?php echo $row['prefixemp']; ?>" required>
             <option selected>-กรุณาเลือก-</option>
             <option value="พนักงานประจำ">พนักงานประจำ</option>
             <option value="พนักงานพาสไทม์">พนักงานพาสไทม์</option>
