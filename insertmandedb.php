@@ -6,7 +6,7 @@ $mandeqty = $_POST['mandeqty'];
 $mandeunit = $_POST['mandeunit'];
 $tmqmande = $_POST['tmqmande'];
 $checkm = mysqli_query($con, "SELECT * FROM mandedb WHERE mande = '" . $mande . "'");
-$result1 = mysqli_num_rows($checkm) or die("เกิดข้อผิดพลาดเกิดขึ้น");
+$result1 = mysqli_num_rows($checkm);
 if ($result1 > 0 ) {
     echo "<script type='text/javascript'>";
     echo "alert(' ข้อมูลซ้ำ กรุณาเพิ่มใหม่อีกครั้ง !');";
