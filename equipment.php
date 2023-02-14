@@ -4,12 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>หน้าแรก</title>
+    <title>การจัดการข้อมูลวัสดุและอุปกรณ์</title>
     <link rel="stylesheet" href="mystyle.css">
     <link rel="stylesheet" href="welcome.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
 </head>
+
 <body>
     <nav class="navbar navbar-expand-lg navbar-light">
         <div class="">
@@ -22,8 +23,8 @@
                 </li>
         </div>
         <div class="">
-        <button type="button" class="btn btn-secondary btn-sm" disabled>กำหนดสิทธิ์</button>
-        <button type="button" class="btn btn-danger btn-sm">ออกจากระบบ</button>
+            <button type="button" class="btn btn-secondary btn-sm" disabled>กำหนดสิทธิ์</button>
+            <button type="button" class="btn btn-danger btn-sm">ออกจากระบบ</button>
         </div>
     </nav>
     <div>
@@ -87,18 +88,70 @@
                 </ul>
             </div>
     </nav>
-    <br><br><br><br><br>
+
+    <div class="container">
+        <br>
+        <h3 class="text-center">การจัดการข้อมูลวัสดุและอุปกรณ์</h3>
+        <br>
+        <div class="btn-add">
+            <a type="button" class="btn btn-success" href="insert_equipment.php">
+                <iconify-icon icon="carbon:document-add" style="color: white;" width="42" height="42"></iconify-icon>
+            </a>
+        </div>
+        <br>
+        <div class="col-md-7">
+            <form action="search_equipment.php" method="POST">
+                <div class="input-group mb-3">
+                    <input type="text" name="equipment_data" required class="form-control" placeholder="กรอกชื่อที่ต้องการจะค้นหา...">
+                    <button type="submit" class="btn btn-primary">ค้นหา</button>
+                </div>
+            </form>
+        </div>
+        <hr>
+        <table class="table table-bordered table-striped">
+            <tr>
+                <th>ลำดับ</th>
+                <th>รหัส</th>
+                <th>ชื่อวัสดุและอุปกรณ์</th>
+                <th>จำนวน</th>
+                <th>หน่วยนับ</th>
+                <th>ประเภทวัสดุและอุปกรณ์</th>
+                <th>การดำเนินการ</th>
+            </tr>
+            <tbody>
+                <?php
+                include('condb.php');
+                $query = "
+                SELECT e.*, u.unit_name, t.equipment_type_name
+                FROM tb_equipment as e
+                INNER JOIN tb_unit as u ON e.ref_unit_number = u.unit_number
+                INNER JOIN tb_equipment_type as t ON e.ref_equipment_type_number = t.equipment_type_number
+                ORDER BY u.unit_number ASC, t.equipment_type_name ASC;
+                ";
+                $result = mysqli_query($con, $query);
+                while ($values = mysqli_fetch_assoc($result)) {
+                ?>
+                    <tr>
+                        <td><?php echo $values["equipment_number"]; ?></td>
+                        <td><?php echo $values["equipment_id"]; ?></td>
+                        <td><?php echo $values["equipment_name"]; ?></td>
+                        <td><?php echo $values["equipment_quantity"]; ?></td>
+                        <td><?php echo $values["unit_name"]; ?></td>
+                        <td><?php echo $values["equipment_type_name"]; ?></td>
+                        <td>
+                            <a href="update_equipment.php?equipment_number=<?php echo $values['equipment_number']; ?>" class="btn btn-primary"><iconify-icon icon="el:file-edit"></iconify-icon></a>
+                            <a onclick="return confirm('คุณแน่ใจหรือว่าต้องการลบรายการนี้?')" href="delete_equipment.php?equipment_number=<?php echo $row['equipment_number']; ?>" class='btn btn-danger'><iconify-icon icon="ant-design:delete-outlined"></iconify-icon></a>
+                        </td>
+                    </tr>
+                <?php
+                }
+                ?>
+            </tbody>
+        </table>
+    </div>
     <script src="https://code.iconify.design/iconify-icon/1.0.0/iconify-icon.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
 </body>
 
 </html>
-<div class="container">
-    <h2 class="title">
-        <span class="title-word title-word-1">ยิน</span>
-        <span class="title-word title-word-2">ดี</span>
-        <span class="title-word title-word-3">ต้อน</span>
-        <span class="title-word title-word-4">รับ</span>
-    </h2>
-</div>
