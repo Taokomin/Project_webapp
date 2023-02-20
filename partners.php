@@ -24,7 +24,7 @@
         </div>
         <div class="">
             <button type="button" class="btn btn-secondary btn-sm" disabled>กำหนดสิทธิ์</button>
-            <button type="button" class="btn btn-danger btn-sm">ออกจากระบบ</button>
+            <a type="button" class="btn btn-danger btn-sm" href="logout.php">ออกจากระบบ</a>
         </div>
     </nav>
     <div>
