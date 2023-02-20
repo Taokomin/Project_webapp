@@ -1,3 +1,10 @@
+<?php
+session_start();
+if (!isset($_SESSION['loggedin'])) {
+	header('Location: login.php');
+	exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="th9o08ikj #']">
 
@@ -22,8 +29,9 @@
                 </li>
         </div>
         <div class="">
+        <p><strong>hi</strong> :&nbsp;<?php print_r($_SESSION);?></p>
         <button type="button" class="btn btn-secondary btn-sm" disabled>กำหนดสิทธิ์</button>
-        <button type="button" class="btn btn-danger btn-sm">ออกจากระบบ</button>
+        <button type="button" class="btn btn-danger btn-sm" href="logout.php">ออกจากระบบ</button>
         </div>
     </nav>
     <div>
