@@ -8,8 +8,8 @@ $equipment_type_name = $_POST["equipment_type_name"];
 $sql = "UPDATE tb_equipment_type SET equipment_type_id = '$equipment_type_id', material_equipment_name = '$equipment_type_name' WHERE equipment_type_number = '$equipment_type_number'";
 
 
-$result = mysqli_query($con, $sql) or die("เกิดข้อผิดพลาดเกิดขึ้น");
-if ($result) {
+$update = mysqli_query($con, $sql) or die("เกิดข้อผิดพลาดเกิดขึ้น");
+if ($update) {
     echo "<script type='text/javascript'>";
     echo "alert('เพิ่มข้อมูลเรียบร้อยแล้ว');";
     echo "window.location.href='equipment_type.php';";

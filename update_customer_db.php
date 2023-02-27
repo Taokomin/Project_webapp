@@ -8,8 +8,6 @@ $customer_lname = $_POST['customer_lname'];
 $customer_phone = $_POST['customer_phone'];
 $customer_email = $_POST['customer_email'];
 
-$check = mysqli_query($con, "SELECT * FROM tb_customer WHERE customer_fname = '$customer_fname' OR customer_lname = '$customer_lname' OR customer_phone = '$customer_phone' OR customer_email = '$customer_email'");
-$result = mysqli_num_rows($check);
 
 if ($result > 0) {
     echo "<script type='text/javascript'>";
@@ -22,7 +20,7 @@ if ($result > 0) {
     $insert = mysqli_query($con, $sql) or die("Error occurred.");
     if ($insert) {
         echo "<script type='text/javascript'>";
-        echo "alert('เพิ่มข้อมูลเรียบร้อยแล้ว.');";
+        echo "alert('แก้ไขข้อมูลเรียบร้อยแล้ว');";
         echo "window.location.href='customer.php';";
         echo "</script>";
     } else {

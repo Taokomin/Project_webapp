@@ -8,10 +8,10 @@ $unit_name = $_POST["unit_name"];
 $sql = "UPDATE tb_unit SET uni_id = '$unit_id', unit_name = 'unit_name' WHERE unit_number = '$unit_number'";
 
 
-$result = mysqli_query($con, $sql) or die("เกิดข้อผิดพลาดเกิดขึ้น");
-if ($result) {
+$update = mysqli_query($con, $sql) or die("เกิดข้อผิดพลาดเกิดขึ้น");
+if ($update) {
     echo "<script type='text/javascript'>";
-    echo "alert('เพิ่มข้อมูลเรียบร้อยแล้ว');";
+    echo "alert('แก้ไขข้อมูลเรียบร้อยแล้ว');";
     echo "window.location.href='unit.php';";
     echo "</script>";
 } else {

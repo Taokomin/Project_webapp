@@ -12,7 +12,7 @@ if (!$_SESSION["UserID"]){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>การจัดการข้อมูลลูกค้า</title>
+    <title>การจัดการข้อมูลการส่งมอบสินค้า</title>
     <link rel="stylesheet" href="mystyle.css">
     <link rel="stylesheet" href="welcome.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
@@ -101,18 +101,18 @@ if (!$_SESSION["UserID"]){
 
     <div class="container">
         <br>
-        <h3 class="text-center">การจัดการข้อมูลลูกค้า</h3>
+        <h3 class="text-center">การจัดการข้อมูลการส่งมอบสินค้า</h3>
         <br>
         <div class="btn-add">
-            <a type="button" class="btn btn-success" href="insert_customer.php">
+            <a type="button" class="btn btn-success" href="insert_deliver.php">
                 <iconify-icon icon="carbon:document-add" style="color: white;" width="42" height="42"></iconify-icon>
             </a>
         </div>
         <br>
         <div class="col-md-7">
-            <form action="search_customer.php" method="POST">
+            <form action="search_deliver.php" method="POST">
                 <div class="input-group mb-3">
-                    <input type="text" name="customer_data" required class="form-control" placeholder="กรอกชื่อที่ต้องการจะค้นหา...">
+                    <input type="text" name="deliver_data" required class="form-control" placeholder="กรอกชื่อที่ต้องการจะค้นหา...">
                     <button type="submit" class="btn btn-primary">ค้นหา</button>
                 </div>
             </form>
@@ -121,36 +121,36 @@ if (!$_SESSION["UserID"]){
         <table class="table table-bordered table-striped">
             <tr>
                 <th>ลำดับ</th>
-                <th>รหัส</th>
-                <th>คำนำหน้าชื่อ</th>
-                <th>ชื่อ</th>
-                <th>นามสกุล</th>
-                <th>อีเมล</th>
-                <th>เบอร์โทร</th>
+                <th>รหัสส่งมอบ</th>
+                <th>วั่นที่ส่งมอบ</th>
+                <th>สั่งสินค้า </th>
+                <th>ที่อยู่ที่ส่งมอบ</th>
+                <th>พนักงาน</th>
                 <th>การดำเนินการ</th>
             </tr>
             <tbody>
                 <?php
                 include('condb.php');
                 $query = "
-                        SELECT c.*,n.prefix_name
-                        FROM tb_customer as c 
-                        INNER JOIN  tb_nameprefix as n ON c.ref_nameprefix_number = n.prefix_number
-                        ORDER BY n.prefix_number asc";
+                SELECT d.*, co.customer_order_detail , e.employee_fname
+                FROM tb_deliver as d
+                INNER JOIN tb_customer_order as co ON  d.ref_customer_order_number = co.customer_order_number
+                INNER JOIN tb_employee as e ON d.ref_employee_number = e.employee_number
+                ORDER BY co.customer_order_number , e.employee_number ASC;
+                ";
                 $result = mysqli_query($con, $query);
                 while ($values = mysqli_fetch_assoc($result)) {
                 ?>
                     <tr>
-                        <td><?php echo $values["customer_number"]; ?></td>
-                        <td><?php echo $values["customer_id"]; ?></td>
-                        <td><?php echo $values["prefix_name"]; ?></td>
-                        <td><?php echo $values["customer_fname"]; ?></td>
-                        <td><?php echo $values["customer_lname"]; ?></td>
-                        <td><?php echo $values["customer_phone"]; ?></td>
-                        <td><?php echo $values["customer_email"]; ?></td>
+                        <td><?php echo $values["deliver_number"]; ?></td>
+                        <td><?php echo $values["deliver_id"]; ?></td>
+                        <td><?php echo $values["deliver_day"]; ?></td>
+                        <td><?php echo $values["customer_order_detail"]; ?></td>
+                        <td><?php echo $values["deliver_address"]; ?></td>
+                        <td><?php echo $values["employee_fname"]; ?></td>
                         <td>
-                            <a href="update_customer.php?customer_number=<?php echo $values['customer_number']; ?>" class="btn btn-primary"><iconify-icon icon="el:file-edit"></iconify-icon></a>
-                            <a onclick="return confirm('คุณแน่ใจหรือว่าต้องการลบรายการนี้?')" href="delete_customer.php?customer_number=<?php echo $values['customer_number']; ?>" class='btn btn-danger remove'><iconify-icon icon="ant-design:delete-outlined"></iconify-icon></a>
+                            <a href="update_deliver.php?deliver_number=<?php echo $values['deliver_number']; ?>" class="btn btn-primary"><iconify-icon icon="el:file-edit"></iconify-icon></a>
+                            <a onclick="return confirm('คุณแน่ใจหรือว่าต้องการลบรายการนี้?')" href="delete_deliver.php?deliver_number=<?php echo $values['deliver_number']; ?>"" class='btn btn-danger remove'><iconify-icon icon="ant-design:delete-outlined"></iconify-icon></a>
                         </td>
                     </tr>
                 <?php
@@ -163,5 +163,6 @@ if (!$_SESSION["UserID"]){
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
 </body>
+
 </html>
 <?php }?>

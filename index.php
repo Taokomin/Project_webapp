@@ -1,4 +1,11 @@
-
+<?php session_start();?>
+<?php 
+ 
+if (!$_SESSION["UserID"]){
+ 
+	  Header("Location: index.php");
+ 
+}else{?>
 <!DOCTYPE html>
 <html lang="th9o08ikj #']">
 
@@ -22,8 +29,10 @@
                     <a>บริษัท คิว.ดี.อี. พรีซิชั่น พาร์ท จำกัด (Q.D.E Precision Part Co.ltd.)</a>
                 </li>
         </div>
-        <div class="">
-        <button type="button" class="btn btn-secondary btn-sm" disabled>กำหนดสิทธิ์</button>
+        <div>
+        <a><iconify-icon icon="gg:profile" width="32" height="32"></iconify-icon><?php echo ($_SESSION['User']);?> <?php ?></a>
+        </div>
+        <div >
         <a type="button" class="btn btn-danger btn-sm" href="logout.php">ออกจากระบบ</a>
         </div>
     </nav>
@@ -64,10 +73,10 @@
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="#">ข้อมูลการสั่งซื้อสินค้าจากลูกค้า</a>
+                        <a class="nav-link active" href="customer_order.php">ข้อมูลการสั่งซื้อสินค้าจากลูกค้า</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="#">ข้อมูลการส่งมอบสินค้า</a>
+                        <a class="nav-link active" href="deliver.php">ข้อมูลการส่งมอบสินค้า</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" href="#">ข้อมูลการสั่งซื้อวัสดุและอุปกรณ์</a>
@@ -103,3 +112,4 @@
         <span class="title-word title-word-4">รับ</span>
     </h2>
 </div>
+<?php }?>

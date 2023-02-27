@@ -19,7 +19,7 @@ if (isset($_POST['Username'])) {
 
         if ($_SESSION["Userlevel"] == "A") {
 
-            Header("Location: index.php");
+            Header("Location: admin.php");
         } else if ($_SESSION["Userlevel"] == "M") {
 
             Header("Location: index.php");

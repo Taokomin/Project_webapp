@@ -48,3 +48,6 @@ nav ul li a {
   border-style: solid;
   border-color: #fff;
 }
+a{
+  color: white !important;
+}
