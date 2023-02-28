@@ -42,6 +42,15 @@ if (!empty($date)) {
     echo "<div style='margin-top:1rem;'>คุณเลือกวันที่ {$date}</div>";
 }
 ?>
+
+<?php session_start();?>
+<?php 
+ 
+if (!$_SESSION["UserID"]){
+ 
+	  Header("Location: index.php");
+ 
+}else{?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -104,16 +113,9 @@ if (!empty($date)) {
                 </select>
             </div>
             <div class="mb-3">
-                <label for="ref_employee_number" class="form-label">เลือกพนักงาน</label>
-                <select class="form-select" aria-label="Default select example" name="ref_employee_number" required>
-                    <option value="">-กรุณาเลือก-</option>
-                    <?php foreach ($result2 as $results) { ?>
-                        <option value="<?php echo $results["employee_number"]; ?>">
-                            <?php echo $results["employee_fname"]; ?>
-                        </option>
-                    <?php } ?>
-                </select>
-            </div>
+                        <label for="ref_employee_number" class="form-label">ชื่อพนักงาน</label>
+                        <input type="text" class="form-control" name="ref_employee_number" value="<?php echo ($_SESSION['User']); ?> <?php ?>" readonly>
+                    </div>
     <button type="submit" name="save" class="btn btn-success">เพิ่มข้อมูล</button>
     <a type="button" class="btn btn-danger" href="deliver.php">ยกเลิก</a>
     </form>
@@ -123,6 +125,7 @@ if (!empty($date)) {
 </body>
 
 </html>
+<?php }?>
 <style>
     * {
         margin: 0;

@@ -11,8 +11,6 @@ $query1 = "SELECT * FROM tb_unit ORDER BY unit_number asc";
 $result1 = mysqli_query($sql1, $query1);
 $query2 = "SELECT * FROM tb_customer ORDER BY customer_number asc";
 $result2 = mysqli_query($sql1, $query2);
-$query3 = "SELECT * FROM tb_employee ORDER BY employee_number asc";
-$result3 = mysqli_query($sql1, $query3);
 ?>
 <?php
 isset($_POST['date']) ? $date = $_POST['date'] : $date = "";
@@ -20,6 +18,14 @@ if (!empty($date)) {
     echo "<div style='margin-top:1rem;'>คุณเลือกวันที่ {$date}</div>";
 }
 ?>
+<?php session_start();?>
+<?php 
+ 
+if (!$_SESSION["UserID"]){
+ 
+	  Header("Location: index.php");
+ 
+}else{?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -98,16 +104,9 @@ if (!empty($date)) {
                     </select>
                 </div>
                 <div class="mb-3">
-                    <label for="ref_employee_number" class="form-label">เลือกชื่อพนักงาน</label>
-                    <select class="form-select" aria-label="Default select example" name="ref_employee_number" required>
-                        <option value="">-กรุณาเลือก-</option>
-                        <?php foreach ($result3 as $results) { ?>
-                            <option value="<?php echo $results["employee_number"]; ?>">
-                                <?php echo $results["employee_fname"]; ?>
-                            </option>
-                        <?php } ?>
-                    </select>
-                </div>
+                        <label for="ref_employee_number" class="form-label">ชื่อพนักงาน</label>
+                        <input type="text" class="form-control" name="ref_employee_number" value="<?php echo ($_SESSION['User']); ?> <?php ?>" readonly>
+                    </div>
             </div>
             <button type="submit" name="save" class="btn btn-success">แก้ไขข้อมูล</button>
             <a type="button" class="btn btn-danger" href="customer_order.php">ยกเลิก</a>
@@ -118,6 +117,7 @@ if (!empty($date)) {
 </body>
 
 </html>
+<?php }?>
 <style>
     * {
         margin: 0;

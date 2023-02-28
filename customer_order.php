@@ -134,13 +134,13 @@ if (!$_SESSION["UserID"]){
                 <?php
                 include('condb.php');
                 $query = "
-                SELECT co.*, u.unit_name , c.customer_fname , e.employee_fname
-                FROM tb_customer_order as co
-                INNER JOIN tb_unit as u ON co.ref_unit_number = u.unit_number
-                INNER JOIN tb_customer as c ON  co.ref_customer_number = c.customer_number
-                INNER JOIN tb_employee as e ON co.ref_employee_number = e.employee_number
-                ORDER BY u.unit_number , c.customer_number , e.employee_number ASC;
-                ";  
+                SELECT co.*, u.unit_name, c.customer_fname
+                FROM tb_customer_order AS co
+                INNER JOIN tb_unit AS u ON co.ref_unit_number = u.unit_number
+                INNER JOIN tb_customer AS c ON co.ref_customer_number = c.customer_number
+                ORDER BY u.unit_number, c.customer_number ASC;
+                ";
+            
                 $result = mysqli_query($con, $query);
                 while ($values = mysqli_fetch_assoc($result)) {
                 ?>
@@ -152,7 +152,7 @@ if (!$_SESSION["UserID"]){
                         <td><?php echo $values["customer_order_quantity"]; ?></td>
                         <td><?php echo $values["unit_name"]; ?></td>
                         <td><?php echo $values["customer_fname"]; ?></td>
-                        <td><?php echo $values["employee_fname"]; ?></td>
+                        <td><?php echo $values["ref_employee_number"]; ?></td>
                         <td>
                             <a href="update_customer_order.php?customer_order_number=<?php echo $values['customer_order_number']; ?>" class="btn btn-primary"><iconify-icon icon="el:file-edit"></iconify-icon></a>
                             <a onclick="return confirm('คุณแน่ใจหรือว่าต้องการลบรายการนี้?')" href="delete_customer_order.php?customer_order_number=<?php echo $values['customer_order_number']; ?>"" class='btn btn-danger remove'><iconify-icon icon="ant-design:delete-outlined"></iconify-icon></a>

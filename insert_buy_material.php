@@ -3,19 +3,19 @@ include('condb.php');
 if (!$con) mysqli_connect_errno();
 
 $GLOBALS['maxIdLength'] = 3;
-$GLOBALS['customer_order_number'] = '0';
+$GLOBALS['buy_material_number'] = '0';
 
-$sql = "SELECT customer_order_id FROM tb_customer_order ORDER BY customer_order_id DESC LIMIT 1";
+$sql = "SELECT buy_material_id FROM tb_buy_material ORDER BY buy_material_id DESC LIMIT 1";
 $query = $con->query($sql);
 $result = $query->fetch_assoc();
 
-if ($result['customer_order_id']) {
-    $GLOBALS['customer_order_id'] = $result['customer_order_id'];
+if ($result['buy_material_id']) {
+    $GLOBALS['buy_material_id'] = $result['buy_material_id'];
 }
 
-function increaseId($customer_order_id)
+function increaseId($buy_material_id)
 {
-    $matchId = preg_replace('/[^0-9]/', '', $customer_order_id);
+    $matchId = preg_replace('/[^0-9]/', '', $buy_material_id);
     $convertStringToInt = (int)$matchId;
 
     $concatIdWithString = (string)($convertStringToInt + 1);
@@ -26,7 +26,7 @@ function increaseId($customer_order_id)
         $round += 1;
     }
 
-    return 'PO' . $concatIdWithString;
+    return 'BM' . $concatIdWithString;
 }
 ?>
 <?php
@@ -68,21 +68,21 @@ if (!$_SESSION["UserID"]) {
         <div class="container">
             <h1 class="mt-5">เพิ่มข้อมูลการสั่งซื้อสินค้าจากลูกค้า</h1>
             <hr>
-            <form action="insert_customer_order_db.php" method="post">
+            <form action="insert_buy_material_db.php" method="post">
                 <div class="mb-3">
-                    <label for="customer_order_id" class="form-label">รหัสลูกค้า</label>
-                    <input type="text" class="form-control" name="customer_order_id" value="<?php echo (increaseId($GLOBALS['customer_order_id'])); ?>" readonly>
+                    <label for="buy_material_id" class="form-label">รหัสสั่งซื้อวัสดุและอุปกรณ์</label>
+                    <input type="text" class="form-control" name="buy_material_id" value="<?php echo (increaseId($GLOBALS['buy_material_id'])); ?>" readonly>
                 </div>
                 <div class="mb-3">
-                    <label for="customer_order_day" class="form-label">วั่นที่สั่ง</label>
-                    <input type="date" class="form-control" name="customer_order_day" id="customer_order_day" value="<?php echo date('Y-m-d'); ?>" required>
+                    <label for="buy_material_day" class="form-label">วั่นที่สั่งซื้อ</label>
+                    <input type="date" class="form-control" name="buy_material_day" id="buy_material_day" value="<?php echo date('Y-m-d'); ?>" required>
                     <script type='text/javascript'>
                         var highlight_dates = ['1-5-2020', '11-5-2020', '18-5-2020', '28-5-2020'];
 
                         $(document).ready(function() {
 
 
-                            $('#customer_order_day').customer_order_day({
+                            $('#buy_material_day').buy_material_day({
                                 beforeShowDay: function(date) {
                                     var month = date.getMonth() + 1;
                                     var year = date.getFullYear();
@@ -99,41 +99,41 @@ if (!$_SESSION["UserID"]) {
                     </script>
                 </div>
                 <div class="mb-3">
-                    <label for="customer_order_detail" class="form-label">สินค้าที่สั่งทำ</label>
-                    <input type="text" class="form-control" name="customer_order_detail" required>
+                    <label for="buy_material_detail" class="form-label">รายละเอียดการสั่งซื้อวัสดุและอุปกรณ์</label>
+                    <input type="text" class="form-control" name="buy_material_detail" required>
+                </div>
+                <label for="ref_unit_number" class="form-label">เลือกหน่วยนับ</label>
+                <select class="form-select" aria-label="Default select example" name="ref_unit_number" required>
+                    <option value="">-กรุณาเลือก-</option>
+                    <?php foreach ($result1 as $results) { ?>
+                        <option value="<?php echo $results["unit_number"]; ?>">
+                            <?php echo $results["unit_name"]; ?>
+                        </option>
+                    <?php } ?>
+                </select>
+        </div>
+        <div class="mb-3">
+            <label for="buy_material_quantity">จำนวน</label>
+            <input type="text" class="form-control" name="buy_material_quantity" required>
+            <div class="mb-3">
+                <div class="mb-3">
+                    <label for="ref_customer_number" class="form-label">เลือกชื่อลูกค้า</label>
+                    <select class="form-select" aria-label="Default select example" name="ref_customer_number" required>
+                        <option value="">-กรุณาเลือก-</option>
+                        <?php foreach ($result2 as $results) { ?>
+                            <option value="<?php echo $results["customer_number"]; ?>">
+                                <?php echo $results["customer_fname"]; ?>
+                            </option>
+                        <?php } ?>
+                    </select>
                 </div>
                 <div class="mb-3">
-                    <label for="customer_order_quantity">จำนวน</label>
-                    <input type="text" class="form-control" name="customer_order_quantity" required>
-                    <div class="mb-3">
-                        <label for="ref_unit_number" class="form-label">เลือกหน่วยนับ</label>
-                        <select class="form-select" aria-label="Default select example" name="ref_unit_number" required>
-                            <option value="">-กรุณาเลือก-</option>
-                            <?php foreach ($result1 as $results) { ?>
-                                <option value="<?php echo $results["unit_number"]; ?>">
-                                    <?php echo $results["unit_name"]; ?>
-                                </option>
-                            <?php } ?>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="ref_customer_number" class="form-label">เลือกชื่อลูกค้า</label>
-                        <select class="form-select" aria-label="Default select example" name="ref_customer_number" required>
-                            <option value="">-กรุณาเลือก-</option>
-                            <?php foreach ($result2 as $results) { ?>
-                                <option value="<?php echo $results["customer_number"]; ?>">
-                                    <?php echo $results["customer_fname"]; ?>
-                                </option>
-                            <?php } ?>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="ref_employee_number" class="form-label">ชื่อพนักงาน</label>
-                        <input type="text" class="form-control" name="ref_employee_number" value="<?php echo ($_SESSION['User']); ?> <?php ?>" readonly>
-                    </div>
+                    <label for="ref_employee_number" class="form-label">ชื่อพนักงาน</label>
+                    <input type="text" class="form-control" name="ref_employee_number" value="<?php echo ($_SESSION['User']); ?> <?php ?>" readonly>
                 </div>
-                <button type="submit" name="save" class="btn btn-success">เพิ่มข้อมูล</button>
-                <a type="button" class="btn btn-danger" href="customer_order.php">ยกเลิก</a>
+            </div>
+            <button type="submit" name="save" class="btn btn-success">เพิ่มข้อมูล</button>
+            <a type="button" class="btn btn-danger" href="customer_order.php">ยกเลิก</a>
             </form>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>

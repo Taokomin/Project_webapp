@@ -79,7 +79,7 @@ if (!$_SESSION["UserID"]){
                         <a class="nav-link active" href="deliver.php">ข้อมูลการส่งมอบสินค้า</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="#">ข้อมูลการสั่งซื้อวัสดุและอุปกรณ์</a>
+                        <a class="nav-link active" href="buy_material.php">ข้อมูลการสั่งซื้อวัสดุและอุปกรณ์</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" href="#">ข้อมูลการรับเข้าวัสดุและอุปกรณ์</a>
@@ -104,6 +104,7 @@ if (!$_SESSION["UserID"]){
 </body>
 
 </html>
+<?php }?>
 <div class="container">
     <h2 class="title">
         <span class="title-word title-word-1">ยิน</span>
@@ -112,4 +113,3 @@ if (!$_SESSION["UserID"]){
         <span class="title-word title-word-4">รับ</span>
     </h2>
 </div>
-<?php }?>

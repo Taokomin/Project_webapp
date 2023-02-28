@@ -132,11 +132,10 @@ if (!$_SESSION["UserID"]){
                 <?php
                 include('condb.php');
                 $query = "
-                SELECT d.*, co.customer_order_detail , e.employee_fname
+                SELECT d.*, co.customer_order_detail
                 FROM tb_deliver as d
                 INNER JOIN tb_customer_order as co ON  d.ref_customer_order_number = co.customer_order_number
-                INNER JOIN tb_employee as e ON d.ref_employee_number = e.employee_number
-                ORDER BY co.customer_order_number , e.employee_number ASC;
+                ORDER BY co.customer_order_number ASC;
                 ";
                 $result = mysqli_query($con, $query);
                 while ($values = mysqli_fetch_assoc($result)) {
@@ -147,7 +146,7 @@ if (!$_SESSION["UserID"]){
                         <td><?php echo $values["deliver_day"]; ?></td>
                         <td><?php echo $values["customer_order_detail"]; ?></td>
                         <td><?php echo $values["deliver_address"]; ?></td>
-                        <td><?php echo $values["employee_fname"]; ?></td>
+                        <td><?php echo $values["ref_employee_number"]; ?></td>
                         <td>
                             <a href="update_deliver.php?deliver_number=<?php echo $values['deliver_number']; ?>" class="btn btn-primary"><iconify-icon icon="el:file-edit"></iconify-icon></a>
                             <a onclick="return confirm('คุณแน่ใจหรือว่าต้องการลบรายการนี้?')" href="delete_deliver.php?deliver_number=<?php echo $values['deliver_number']; ?>"" class='btn btn-danger remove'><iconify-icon icon="ant-design:delete-outlined"></iconify-icon></a>
