@@ -80,13 +80,13 @@ if (!$_SESSION["UserID"]){
                         <a class="nav-link active" href="deliver.php">ข้อมูลการส่งมอบสินค้า</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="#">ข้อมูลการสั่งซื้อวัสดุและอุปกรณ์</a>
+                        <a class="nav-link active" href="buy_material.php">ข้อมูลการสั่งซื้อวัสดุและอุปกรณ์</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="#">ข้อมูลการรับเข้าวัสดุและอุปกรณ์</a>
+                        <a class="nav-link active" href="accept_material.php">ข้อมูลการรับเข้าวัสดุและอุปกรณ์</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="#">ข้อมูลการเบิกวัสดุและอุปกรณ์</a>
+                        <a class="nav-link active" href="pickup_material.php">ข้อมูลการเบิกวัสดุและอุปกรณ์</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" href="#">ข้อมูลการรับคืนวัสดุและอุปกรณ์</a>
@@ -123,7 +123,12 @@ if (!$_SESSION["UserID"]){
                 <th>ลำดับ</th>
                 <th>รหัสส่งมอบ</th>
                 <th>วั่นที่ส่งมอบ</th>
-                <th>สั่งสินค้า </th>
+                <th>รหัส</th>
+                <th>วันที่สั่ง</th>
+                <th>สินค้าที่สั่งทำ</th>
+                <th>จำนวน</th>
+                <th>หน่วยนับ</th>
+                <th>ลูกค้า</th>
                 <th>ที่อยู่ที่ส่งมอบ</th>
                 <th>พนักงาน</th>
                 <th>การดำเนินการ</th>
@@ -131,12 +136,13 @@ if (!$_SESSION["UserID"]){
             <tbody>
                 <?php
                 include('condb.php');
-                $query = "
-                SELECT d.*, co.customer_order_detail
-                FROM tb_deliver as d
-                INNER JOIN tb_customer_order as co ON  d.ref_customer_order_number = co.customer_order_number
-                ORDER BY co.customer_order_number ASC;
-                ";
+                // $query = "
+                // SELECT d.*, co.customer_order_detail
+                // FROM tb_deliver as d
+                // INNER JOIN tb_customer_order as co ON  d.ref_customer_order_number = co.customer_order_number
+                // ORDER BY co.customer_order_number ASC;
+                // ";
+                $query = "SELECT * FROM tb_deliver ORDER BY deliver_number asc" or die("Error:" . mysqli_error());
                 $result = mysqli_query($con, $query);
                 while ($values = mysqli_fetch_assoc($result)) {
                 ?>
@@ -144,7 +150,12 @@ if (!$_SESSION["UserID"]){
                         <td><?php echo $values["deliver_number"]; ?></td>
                         <td><?php echo $values["deliver_id"]; ?></td>
                         <td><?php echo $values["deliver_day"]; ?></td>
-                        <td><?php echo $values["customer_order_detail"]; ?></td>
+                        <td><?php echo $values["ref_customer_order_id"]; ?></td>
+                        <td><?php echo $values["ref_customer_order_day"]; ?></td>
+                        <td><?php echo $values["ref_customer_order_detail"]; ?></td>
+                        <td><?php echo $values["ref_customer_order_quantity"]; ?></td>
+                        <td><?php echo $values["ref_unit_name"]; ?></td>
+                        <td><?php echo $values["ref_customer_fname"]; ?></td>
                         <td><?php echo $values["deliver_address"]; ?></td>
                         <td><?php echo $values["ref_employee_number"]; ?></td>
                         <td>

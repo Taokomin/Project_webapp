@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>การจัดการข้อมูลการส่งมอบสินค้า</title>
+    <title>การจัดการข้อมูลการสั่งซื้อวัสดุและอุปกรณ์</title>
     <link rel="stylesheet" href="mystyle.css">
     <link rel="stylesheet" href="welcome.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
@@ -92,25 +92,25 @@
         <?php
         include('condb.php');
         mysqli_set_charset($con, "utf8");
-        $deliver_data = $_POST["deliver_data"];
-        $sql = "SELECT * FROM tb_deliver WHERE deliver_id LIKE '%$deliver_data%' OR deliver_id LIKE '%$deliver_data%' ORDER BY deliver_id ASC ";
+        $buy_material_data = $_POST["buy_material_data"];
+        $sql = "SELECT * FROM tb_buy_material WHERE buy_material_id LIKE '%$buy_material_data%' OR buy_material_id LIKE '%$buy_material_data%' ORDER BY buy_material_id ASC ";
         $result = mysqli_query($con, $sql);
         $count = mysqli_num_rows($result);
         $order = 1;
         ?>
         <br>
-        <h3 class="text-center">การจัดการข้อมูลการส่งมอบสินค้า</h3>
+        <h3 class="text-center">การจัดการข้อมูลการสั่งซื้อวัสดุและอุปกรณ์</h3>
         <br>
         <div class="btn-add">
-            <a type="button" class="btn btn-success" href="insert_deliver.php">
+            <a type="button" class="btn btn-success" href="insert_buy_material.php">
                 <iconify-icon icon="carbon:document-add" style="color: white;" width="42" height="42"></iconify-icon>
             </a>
         </div>
         <br>
         <div class="col-md-7">
-            <form action="search_deliver.php" method="POST">
+            <form action="search_buy_material.php" method="POST">
                 <div class="input-group mb-3">
-                    <input type="text" name="deliver_data" required class="form-control" placeholder="กรอกชื่อที่ต้องการจะค้นหา...">
+                    <input type="text" name="buy_material_data" required class="form-control" placeholder="กรอกชื่อที่ต้องการจะค้นหา...">
                     <button type="submit" class="btn btn-primary">ค้นหา</button>
                 </div>
             </form>
@@ -121,41 +121,47 @@
                 <thead>
                     <tr>
                         <th>ลำดับ</th>
-                        <th>รหัสส่งมอบ</th>
-                        <th>วั่นที่ส่งมอบ</th>
-                        <th>รหัส</th>
-                        <th>วันที่สั่ง</th>
-                        <th>สินค้าที่สั่งทำ</th>
+                        <th>รหัสสั่งซื้อวัสดุและอุปกรณ์</th>
+                        <th>วั่นที่สั่งซื้อ</th>
+                        <th>รายละเอียดการสั่งซื้อวัสดุและอุปกรณ</th>
+                        <th>วัสดุและอุปกรณ์</th>
                         <th>จำนวน</th>
                         <th>หน่วยนับ</th>
-                        <th>ลูกค้า</th>
-                        <th>ที่อยู่ที่ส่งมอบ</th>
+                        <th>ประเภทวัสดุและอุปกรณ์</th>
                         <th>พนักงาน</th>
+                        <th>คู่ค้า</th>
+                        <th>สถานะ</th>
                         <th>การดำเนินการ</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
                     include('condb.php');
-                    $query = "SELECT * FROM tb_deliver ORDER BY deliver_number asc" or die("Error:" . mysqli_error());
+                    
+                    $query = "SELECT bm.*, eq.equipment_name, u.unit_name, et.equipment_type_name, p.partners_fname FROM tb_buy_material as bm
+                    INNER JOIN tb_equipment as eq ON bm.ref_equipment_number = eq.equipment_number
+                    INNER JOIN tb_unit as u ON bm.ref_unit_number = u.unit_number
+                    INNER JOIN tb_equipment_type as et ON bm.ref_equipment_type = et.equipment_type_number
+                    INNER JOIN tb_partners as p ON bm.ref_partners_number = p.partners_number
+                    ORDER BY eq.equipment_number, u.unit_number, et.equipment_type_number, p.partners_number asc" or die("Error:" . mysqli_error());
                     $result = mysqli_query($con, $query);
                     while ($row = mysqli_fetch_assoc($result)) {
                     ?>
                         <tr>
-                            <td><?php echo $row["deliver_number"]; ?></td>
-                            <td><?php echo $row["deliver_id"]; ?></td>
-                            <td><?php echo $row["deliver_day"]; ?></td>
-                            <td><?php echo $row["ref_customer_order_id"]; ?></td>
-                            <td><?php echo $row["ref_customer_order_day"]; ?></td>
-                            <td><?php echo $row["ref_customer_order_detail"]; ?></td>
-                            <td><?php echo $row["ref_customer_order_quantity"]; ?></td>
-                            <td><?php echo $row["ref_unit_name"]; ?></td>
-                            <td><?php echo $row["ref_customer_fname"]; ?></td>
-                            <td><?php echo $row["deliver_address"]; ?></td>
+                            <td><?php echo $row["buy_material_number"]; ?></td>
+                            <td><?php echo $row["buy_material_id"]; ?></td>
+                            <td><?php echo $row["buy_material_day"]; ?></td>
+                            <td><?php echo $row["buy_material_detail"]; ?></td>
+                            <td><?php echo $row["equipment_name"]; ?></td>
+                            <td><?php echo $row["buy_material_quantity"]; ?></td>
+                            <td><?php echo $row["unit_name"]; ?></td>
+                            <td><?php echo $row["equipment_type_name"]; ?></td>
                             <td><?php echo $row["ref_employee_number"]; ?></td>
+                            <td><?php echo $row["partners_fname"]; ?></td>
+                            <td><?php echo $row["buy_material_status"]; ?></td>
                             <td>
-                                <a href="update_deliver.php?deliver_number=<?php echo $row['deliver_number']; ?>" class="btn btn-primary"><iconify-icon icon="el:file-edit"></iconify-icon></a>
-                                <a onclick="return confirm('คุณแน่ใจหรือว่าต้องการลบรายการนี้?')" href="delete_deliver.php?deliver_number=<?php echo $row['deliver_number']; ?>" class='btn btn-danger'><iconify-icon icon="ant-design:delete-outlined"></iconify-icon></a>
+                                <a href="update_buy_material.php?buy_material_number=<?php echo $row['buy_material_number']; ?>" class="btn btn-primary"><iconify-icon icon="el:file-edit"></iconify-icon></a>
+                                <a onclick="return confirm('คุณแน่ใจหรือว่าต้องการลบรายการนี้?')" href="delete_buy_material.php?buy_material_number=<?php echo $row['buy_material_number']; ?>" class='btn btn-danger'><iconify-icon icon="ant-design:delete-outlined"></iconify-icon></a>
                             </td>
                         </tr>
                     <?php } ?>
@@ -163,10 +169,10 @@
             </table>
         <?php } else { ?>
             <div class="alert alert-danger">
-                <b>ไม่พบข้อมูลการส่งมอบสินค้า!!</b>
+                <b>ไม่พบข้อมูลการสั่งซื้อวัสดุและอุปกรณ์!!</b>
             </div>
         <?php } ?>
-        <a href="deliver.php" class="btn btn-success">ย้อนกลับ</a>
+        <a href="buy_material.php" class="btn btn-success">ย้อนกลับ</a>
 
     </div>
     </div>

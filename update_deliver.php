@@ -35,7 +35,7 @@ if (!empty($date)) {
         <h1 class="mt-5">แก้ไขข้อมูลการส่งมอบสินค้า</h1>
         <hr>
         <form action="insert_deliver_db.php" method="post">
-        <input type="hidden" value="<?php echo $values["deliver_number"]; ?>" name="deliver_number">
+            <input type="hidden" value="<?php echo $values["deliver_number"]; ?>" name="deliver_number">
             <div class="mb-3">
                 <label for="deliver_id" class="form-label">รหัสส่งมอบ</label>
                 <input type="text" class="form-control" name="deliver_id" value="<?php echo $values['deliver_id']; ?>" readonly>
@@ -66,34 +66,36 @@ if (!empty($date)) {
                 </script>
             </div>
             <div class="mb-3">
+                <label for="ref_customer_order_day" class="form-label">วันที่สั่ง</label>
+                <input type="text" class="form-control" name="ref_customer_order_day" value="<?php echo $values['ref_customer_order_day']; ?>" readonly>
+            </div>
+            <div class="mb-3">
+                <label for="ref_customer_order_detail" class="form-label">สินค้าที่สั่งทำ</label>
+                <input type="text" class="form-control" name="ref_customer_order_detail" value="<?php echo $values['ref_customer_order_detail']; ?>" readonly>
+            </div>
+            <div class="mb-3">
+                <label for="ref_customer_order_quantity" class="form-label">จำนวน</label>
+                <input type="text" class="form-control" name="ref_customer_order_quantity" value="<?php echo $values['ref_customer_order_quantity']; ?>" readonly>
+            </div>
+            <div class="mb-3">
+                <label for="ref_unit_name" class="form-label">หน่วยนับ</label>
+                <input type="text" class="form-control" name="ref_unit_name" value="<?php echo $values['ref_unit_name']; ?>" readonly>
+            </div>
+            <div class="mb-3">
+                <label for="ref_customer_fname" class="form-label">ลูกค้า</label>
+                <input type="text" class="form-control" name="ref_customer_fname" value="<?php echo $values['ref_customer_fname']; ?>" readonly>
+            </div>
+            <div class="mb-3">
                 <label for="deliver_address" class="form-label">ที่อยู่ที่ส่งมอบ</label>
                 <input type="text" class="form-control" name="deliver_address" value="<?php echo $values['deliver_address']; ?>" required>
             </div>
             <div class="mb-3">
-                <label for="ref_customer_order_number" class="form-label">เลือกสินค้า</label>
-                <select class="form-select" aria-label="Default select example" name="ref_customer_order_number" required>
-                    <option value="">-กรุณาเลือก-</option>
-                    <?php foreach ($result1 as $results) { ?>
-                        <option value="<?php echo $results["customer_order_number"]; ?>">
-                            <?php echo $results["customer_order_detail"]; ?>
-                        </option>
-                    <?php } ?>
-                </select>
+                <label for="ref_employee_number" class="form-label">ชื่อพนักงาน</label>
+                <input type="text" class="form-control" name="ref_employee_number" value="<?php echo $values['ref_employee_number']; ?>" readonly>
             </div>
-            <div class="mb-3">
-                <label for="ref_employee_number" class="form-label">เลือกพนักงาน</label>
-                <select class="form-select" aria-label="Default select example" name="ref_employee_number" required>
-                    <option value="">-กรุณาเลือก-</option>
-                    <?php foreach ($result2 as $results) { ?>
-                        <option value="<?php echo $results["employee_number"]; ?>">
-                            <?php echo $results["employee_fname"]; ?>
-                        </option>
-                    <?php } ?>
-                </select>
-            </div>
-    <button type="submit" name="save" class="btn btn-success">แก้ไขข้อมูล</button>
-    <a type="button" class="btn btn-danger" href="deliver.php">ยกเลิก</a>
-    </form>
+            <button type="submit" name="save" class="btn btn-success">แก้ไขข้อมูล</button>
+            <a type="button" class="btn btn-danger" href="deliver.php">ยกเลิก</a>
+        </form>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>

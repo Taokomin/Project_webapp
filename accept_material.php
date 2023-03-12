@@ -11,7 +11,7 @@ if (!$_SESSION["UserID"]) {
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>การจัดการข้อมูลประเภทวัสดุและอุปกรณ์</title>
+        <title>การจัดการข้อมูลการรับเข้าวัสดุและอุปกรณ์</title>
         <link rel="stylesheet" href="mystyle.css">
         <link rel="stylesheet" href="welcome.css">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
@@ -69,7 +69,7 @@ if (!$_SESSION["UserID"]) {
                                 <li><a class="dropdown-item" href="customer.php">ข้อมูลลูกค้า</a></li>
                                 <li><a class="dropdown-item" href="employee.php">ข้อมูลพนักงาน</a></li>
                                 <li><a class="dropdown-item" href="equipment.php">ข้อมูลวัสดุและอุปกรณ์</a></li>
-                                <li><a class="dropdown-item" href="partner.php">ข้อมูลคู่ค้า</a></li>
+                                <li><a class="dropdown-item" href="partners.php">ข้อมูลคู่ค้า</a></li>
                             </ul>
                         </li>
                         <li class="nav-item">
@@ -100,44 +100,85 @@ if (!$_SESSION["UserID"]) {
 
         <div class="container">
             <br>
-            <h3 class="text-center">การจัดการข้อมูลประเภทวัสดุและอุปกรณ์</h3>
+            <h3 class="text-center">การจัดการข้อมูลการรับเข้าวัสดุและอุปกรณ์</h3>
             <br>
             <div class="btn-add">
-                <a type="button" class="btn btn-success" href="insert_equipment_type.php">
+                <a type="button" class="btn btn-success" href="insert_accept_material.php">
                     <iconify-icon icon="carbon:document-add" style="color: white;" width="42" height="42"></iconify-icon>
                 </a>
             </div>
             <br>
-            <br>
-            <br>
+            <div class="col-md-7">
+                <form action="search_accept_material.php" method="POST">
+                    <div class="input-group mb-3">
+                        <input type="text" name="accept_material_data" required class="form-control" placeholder="กรอกชื่อที่ต้องการจะค้นหา...">
+                        <button type="submit" class="btn btn-primary">ค้นหา</button>
+                    </div>
+                </form>
+            </div>
             <hr>
             <table class="table table-bordered table-striped">
                 <tr>
                     <th>ลำดับ</th>
-                    <th>รหัส</th>
-                    <th>ประเภทวัสดุและอุปกรณ์</th>
+                    <th>รหัสรับเข้า</th>
+                    <th>วันที่รับเข้า</th>
+                    <th>รหัสสั่งซื้อ</th>
+                    <th>วั่นที่สั่งซื้อ</th>    
+                    <th>รายละเอียดการสั่งซื้อวัสดุและอุปกรณ์</th>
+                    <th>วัสดุและอุปกรณ์</th>
+                    <th>จำนวน</th>
+                    <th>หน่วยนับ</th>
+                    <th>รหัสประเภทวัสดุและอุปกรณ์</th>
+                    <th>พนักงาน</th>
+                    <th>คู่ค้า</th>
                     <th>การดำเนินการ</th>
                 </tr>
                 <tbody>
                     <?php
                     include('condb.php');
-                    $query = "SELECT * FROM tb_equipment_type ORDER BY equipment_type_number asc" or die("Error:" . mysqli_error());
+
+                    // $query = "SELECT am.*, bm.buy_material_detail, e.equipment_name, u.unit_name, et.equipment_type_name  
+                    // FROM tb_accept_material as am
+                    // INNER JOIN tb_buy_material as bm ON am.ref_buy_material_number = bm.buy_material_number
+                    // INNER JOIN tb_equipment as e ON am.ref_equipment_number = e.equipment_number
+                    // INNER JOIN tb_unit as u ON am.ref_unit_number = u.unit_number
+                    // INNER JOIN tb_equipment_type as et ON am.ref_equipment_type_number = et.equipment_type_number
+                    // ORDER BY bm.buy_material_detail, e.equipment_name, u.unit_name, et.equipment_type_name ASC" or die("Error:" . mysqli_error());
+
+                    $query = "SELECT * FROM tb_accept_material ORDER BY accept_material_number asc" or die("Error:" . mysqli_error());
+
                     $result = mysqli_query($con, $query);
+                    if (!$result) {
+                        die('Error: ' . mysqli_error($con));
+                    }
+
                     while ($values = mysqli_fetch_assoc($result)) {
                     ?>
                         <tr>
-                            <td><?php echo $values["equipment_type_number"]; ?></td>
-                            <td><?php echo $values["equipment_type_id"]; ?></td>
-                            <td><?php echo $values["equipment_type_name"]; ?></td>
+                            <td><?php echo $values["accept_material_number"]; ?></td>
+                            <td><?php echo $values["accept_material_id"]; ?></td>
+                            <td><?php echo $values["accept_material_day"]; ?></td>
+                            <td><?php echo $values["ref_buy_material_id"]; ?></td>
+                            <td><?php echo $values["ref_buy_material_day"]; ?></td>
+                            <td><?php echo $values["ref_buy_material_detail"]; ?></td>
+                            <td><?php echo $values["ref_equipment_number"]; ?></td> 
+                            <td><?php echo $values["ref_buy_material_quantity"]; ?></td>
+                            <td><?php echo $values["ref_unit_number"]; ?></td>
+                            <td><?php echo $values["ref_equipment_type"]; ?></td>
+                            <td><?php echo $values["ref_employee_number"]; ?></td>
+                            <td><?php echo $values["ref_partners_number"]; ?></td>
                             <td>
-                                <a href="update_equipment_type.php?equipment_type_number=<?php echo $values['equipment_type_number']; ?>" class="btn btn-primary"><iconify-icon icon="el:file-edit"></iconify-icon></a>
-                                <a onclick="return confirm('คุณแน่ใจหรือว่าต้องการลบรายการนี้?')" href="delete_equipment_type.php?equipment_type_number=<?php echo $values['equipment_type_number']; ?>" class='btn btn-danger'><iconify-icon icon="ant-design:delete-outlined"></iconify-icon></a>
+                                <a href="update_accept_material.php?accept_material_number=<?php echo $values['accept_material_number']; ?>" class="btn btn-primary"><iconify-icon icon="el:file-edit"></iconify-icon></a>
+                                <a onclick="return confirm('คุณแน่ใจหรือว่าต้องการลบรายการนี้?')" href="delete_accept_material.php?accept_material_number=<?php echo $values['accept_material_number']; ?>" class="btn btn-danger remove"><iconify-icon icon="ant-design:delete-outlined"></iconify-icon></a>
                             </td>
                         </tr>
                     <?php
                     }
+                    mysqli_free_result($result);
+                    mysqli_close($con);
                     ?>
                 </tbody>
+
             </table>
         </div>
         <script src="https://code.iconify.design/iconify-icon/1.0.0/iconify-icon.min.js"></script>

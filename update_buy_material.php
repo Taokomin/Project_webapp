@@ -1,34 +1,11 @@
 <?php
-include('condb.php');
-if (!$con) mysqli_connect_errno();
-
-$GLOBALS['maxIdLength'] = 3;
-$GLOBALS['buy_material_number'] = '0';
-
-$sql = "SELECT buy_material_id FROM tb_buy_material ORDER BY buy_material_id DESC LIMIT 1";
-$query = $con->query($sql);
-$result = $query->fetch_assoc();
-
-if ($result['buy_material_id']) {
-    $GLOBALS['buy_material_id'] = $result['buy_material_id'];
-}
-
-function increaseId($buy_material_id)
-{
-    $matchId = preg_replace('/[^0-9]/', '', $buy_material_id);
-    $convertStringToInt = (int)$matchId;
-
-    $concatIdWithString = (string)($convertStringToInt + 1);
-
-    $round = 0;
-    while ($round < $GLOBALS['maxIdLength'] - strlen($concatIdWithString)) {
-        $concatIdWithString = '0' . $concatIdWithString;
-        $round += 1;
-    }
-
-    return 'BM' . $concatIdWithString;
-}
+require('condb.php');
+$buy_material_number = $_GET["buy_material_number"];
+$sql = "SELECT * FROM tb_buy_material WHERE buy_material_number='$buy_material_number'";
+$result = mysqli_query($con, $sql);
+$values = mysqli_fetch_assoc($result);
 ?>
+
 <?php
 $sql1 = $con = mysqli_connect("localhost", "root", "", "webdata") or die("เกิดข้อผิดพลาดเกิดขึ้น");
 $query1 = "SELECT * FROM tb_equipment ORDER BY equipment_number asc";
@@ -60,7 +37,7 @@ if (!$_SESSION["UserID"]) {
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>เพิ่มข้อมูลการสั่งซื้อวัสดุและอุปกรณ์</title>
+        <title>เพิ่มข้อมูลการสั่งซื้อสินค้าจากลูกค้า</title>
         <link rel="stylesheet" href="style1.css">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
     </head>
@@ -68,16 +45,17 @@ if (!$_SESSION["UserID"]) {
     <body>
 
         <div class="container">
-            <h1 class="mt-5">เพิ่มข้อมูลการสั่งซื้อวัสดุและอุปกรณ์</h1>
+            <h1 class="mt-5">เพิ่มข้อมูลการสั่งซื้อสินค้าจากลูกค้า</h1>
             <hr>
             <form action="insert_buy_material_db.php" method="post">
+            <input type="hidden" value="<?php echo $values["buy_material_number"]; ?>" name="buy_material_number">
                 <div class="mb-3">
                     <label for="buy_material_id" class="form-label">รหัสสั่งซื้อวัสดุและอุปกรณ์</label>
-                    <input type="text" class="form-control" name="buy_material_id" value="<?php echo (increaseId($GLOBALS['buy_material_id'])); ?>" readonly>
+                    <input type="text" class="form-control" name="buy_material_id"  value="<?php echo $values['buy_material_id']; ?>" readonly>
                 </div>
                 <div class="mb-3">
                     <label for="buy_material_day" class="form-label">วั่นที่สั่งซื้อ</label>
-                    <input type="date" class="form-control" name="buy_material_day" id="buy_material_day" value="<?php echo date('Y-m-d'); ?>" required>
+                    <input type="date" class="form-control" name="buy_material_day" id="buy_material_day" value="<?php echo $values['buy_material_day']; ?>" required>
                     <script type='text/javascript'>
                         var highlight_dates = ['1-5-2020', '11-5-2020', '18-5-2020', '28-5-2020'];
 
@@ -102,7 +80,7 @@ if (!$_SESSION["UserID"]) {
                 </div>
                 <div class="mb-3">
                     <label for="buy_material_detail" class="form-label">รายละเอียดการสั่งซื้อวัสดุและอุปกรณ์</label>
-                    <input type="text" class="form-control" name="buy_material_detail" required>
+                    <input type="text" class="form-control" name="buy_material_detail" value="<?php echo $values['buy_material_detail']; ?>"required>
                 </div>
                 <div class="mb-3">
                     <label for="ref_equipment_number" class="form-label">เลือกวัสดุและอุปกรณ์</label>
@@ -117,7 +95,7 @@ if (!$_SESSION["UserID"]) {
                 </div>
                 <div class="mb-3">
                     <label for="buy_material_quantity">จำนวน</label>
-                    <input type="text" class="form-control" name="buy_material_quantity" required>
+                    <input type="text" class="form-control" name="buy_material_quantity" value="<?php echo $values['buy_material_quantity']; ?>" required>
                 </div>
                 <div class="mb-3">
                     <label for="ref_unit_number" class="form-label">เลือกหน่วยนับ</label>

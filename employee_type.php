@@ -79,16 +79,16 @@ if (!$_SESSION["UserID"]) {
                             <a class="nav-link active" href="deliver.php">ข้อมูลการส่งมอบสินค้า</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="#">ข้อมูลการสั่งซื้อวัสดุและอุปกรณ์</a>
+                            <a class="nav-link active" href="buy_material.php">ข้อมูลการสั่งซื้อวัสดุและอุปกรณ์</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="#">ข้อมูลการรับเข้าวัสดุและอุปกรณ์</a>
+                            <a class="nav-link active" href="accept_material.php">ข้อมูลการรับเข้าวัสดุและอุปกรณ์</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="#">ข้อมูลการเบิกวัสดุและอุปกรณ์</a>
+                            <a class="nav-link active" href="pickup_material.php">ข้อมูลการเบิกวัสดุและอุปกรณ์</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="#">ข้อมูลการรับคืนวัสดุและอุปกรณ์</a>
+                            <a class="nav-link active" href="takeback.php">ข้อมูลการรับคืนวัสดุและอุปกรณ์</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link active" href="#">การออกรายงาน</a>

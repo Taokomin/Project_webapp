@@ -42,7 +42,6 @@ if (!empty($date)) {
     echo "<div style='margin-top:1rem;'>คุณเลือกวันที่ {$date}</div>";
 }
 ?>
-
 <?php session_start(); ?>
 <?php
 
@@ -68,79 +67,78 @@ if (!$_SESSION["UserID"]) {
         <div class="container">
             <h1 class="mt-5">เพิ่มข้อมูลการส่งมอบสินค้า</h1>
             <hr>
-            <form id="myForm" method="GET">
+            <form action="" method="GET">
+
+                <div class="row">
+                    <div class="mb-3">
+                        <label for="customer_order_id" class="form-label">รหัสส่งมอบ</label>
+                        <input type="text" class="form-control" name="deliver_id" value="<?php echo (increaseId($GLOBALS['deliver_id'])); ?>" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="deliver_day" class="form-label">วั่นที่ส่งมอบ</label>
+                        <input type="date" class="form-control" name="deliver_day" id="deliver_day" value="<?php echo date('Y-m-d'); ?>" required>
+                        <script type='text/javascript'>
+                            var highlight_dates = ['1-5-2020', '11-5-2020', '18-5-2020', '28-5-2020'];
+
+                            $(document).ready(function() {
 
 
-                <div class="mb-3">
-                    <label for="deliver_id" class="form-label">รหัสส่งมอบ</label>
-                    <input type="text" class="form-control" name="deliver_id" value="<?php echo (increaseId($GLOBALS['deliver_id'])); ?>" readonly>
-                </div>
-                <div class="mb-3">
-                    <label for="deliver_day" class="form-label">วันที่ส่งมอบ</label>
-                    <input type="date" class="form-control" name="deliver_day" id="deliver_day" value="<?php echo date('Y-m-d'); ?>" required>
-                    <script type='text/javascript'>
-                        var highlight_dates = ['1-5-2020', '11-5-2020', '18-5-2020', '28-5-2020'];
-                        $(document).ready(function() {
-                            $('#deliver_day').deliver_day({
-                                beforeShowDay: function(date) {
-                                    var month = date.getMonth() + 1;
-                                    var year = date.getFullYear();
-                                    var day = date.getDate();
-                                    var newdate = day + "-" + month + '-' + year;
-                                    var tooltip_text = "New event on " + newdate;
-                                    if ($.inArray(newdate, highlight_dates) != -1) {
-                                        return [true, "highlight", tooltip_text];
+                                $('#deliver_day').deliver_day({
+                                    beforeShowDay: function(date) {
+                                        var month = date.getMonth() + 1;
+                                        var year = date.getFullYear();
+                                        var day = date.getDate();
+                                        var newdate = day + "-" + month + '-' + year;
+                                        var tooltip_text = "New event on " + newdate;
+                                        if ($.inArray(newdate, highlight_dates) != -1) {
+                                            return [true, "highlight", tooltip_text];
+                                        }
+                                        return [true];
                                     }
-                                    return [true];
-                                }
+                                });
                             });
-                        });
-                    </script>
-                </div>
-                <div class="mb-3">
-                    <label for="searchInput" class="form-label">รหัสสั่งซื้อสินค้าจากลูกค้า</label>
-                    <select class="form-select" aria-label="Default select example" name="ref_customer_order_id" required>
-                        <option value="<?php if (isset($_GET['ref_customer_order_id'])) {
-                                            echo $_GET['ref_customer_order_id'];
-                                        } ?>">-กรุณาเลือก-</option>
-                        <?php foreach ($result1 as $results) { ?>
-                            <option value="<?php echo $results["customer_order_id"]; ?>">
-                                <?php echo $results["customer_order_id"]; ?>
-                            </option>
-                        <?php } ?>
-                    </select>
-                </div>
-                <div class="col-md-4">
-                    <button type="submit" class="btn btn-primary" id="searchBtn" onclick="submitSearch()">ค้นหา</button>
-                </div>
-                <script>
-                    function submitSearch() {
-                        document.getElementById("myForm").action = "";
-                        document.getElementById("myForm").method = "GET";
-                        document.getElementById("myForm").submit();
-                    }
+                        </script>
+                    </div>
 
-                    function submitData() {
-                        document.getElementById("myForm").action = "insert_deliver_db.php";
-                        document.getElementById("myForm").method = "GET";
-                        document.getElementById("myForm").submit();
-                    }
-                </script>
+                    <div class="mb-3">
+                        <label for="deliver_address" class="form-label">รหัส</label>
+                        <select class="form-select" aria-label="Default select example" name="stud_customer_order_id" class="form-control" required>
+                            <option value="<?php if (isset($_GET['stud_customer_order_id'])) {
+                                                echo $_GET['stud_customer_order_id'];
+                                            } ?>">-กรุณาเลือก-</option>
+                            <?php foreach ($result1 as $results) { ?>
+                                <option value="<?php echo $results["customer_order_id"]; ?>">
+                                    <?php echo $results["customer_order_id"]; ?>
+                                </option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <button type="submit" class="btn btn-primary" id="searchBtn">ค้นหา</button>
+                    </div>
+
+                </div>
+
+
                 <div class="row">
                     <div class="col-md-12">
                         <hr>
                         <?php
                         $con = mysqli_connect("localhost", "root", "", "webdata");
-                        if (isset($_GET['ref_customer_order_id'])) {
-                            $ref_customer_order_id = $_GET['ref_customer_order_id'];
-                            $query = "SELECT co.*, u.unit_name, c.customer_fname
-                            FROM tb_customer_order AS co
-                            INNER JOIN tb_unit AS u ON co.ref_unit_number = u.unit_number
-                            INNER JOIN tb_customer AS c ON co.ref_customer_number = c.customer_number
-                            WHERE customer_order_id='$ref_customer_order_id'
-                            ORDER BY u.unit_number, c.customer_number ASC";
-                            
+
+                        if (isset($_GET['stud_customer_order_id'])) {
+                            $stud_customer_order_id = $_GET['stud_customer_order_id'];
+                            $query = "
+                                    SELECT co.*, u.unit_name, c.customer_fname
+                                    FROM tb_customer_order AS co
+                                    INNER JOIN tb_unit AS u ON co.ref_unit_number = u.unit_number
+                                    INNER JOIN tb_customer AS c ON co.ref_customer_number = c.customer_number
+                                    WHERE customer_order_id='$stud_customer_order_id'
+                                    ORDER BY u.unit_number, c.customer_number ASC;
+                                    ";
+
                             $query_run = mysqli_query($con, $query);
+
                             if (mysqli_num_rows($query_run) > 0) {
                                 foreach ($query_run as $row) {
                         ?>
@@ -167,7 +165,7 @@ if (!$_SESSION["UserID"]) {
                         <?php
                                 }
                             } else {
-                                echo "ไม่พบบันทึก";
+                                echo "No Record Found";
                             }
                         }
 
@@ -176,18 +174,17 @@ if (!$_SESSION["UserID"]) {
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="deliver_address" class="form-label">ที่อยู่ที่ส่งมอบ</label>
-                    <input type="text" class="form-control" name="deliver_address" required>
-                </div>
-                <div class="mb-3">
                     <label for="ref_employee_number" class="form-label">ชื่อพนักงาน</label>
                     <input type="text" class="form-control" name="ref_employee_number" value="<?php echo ($_SESSION['User']); ?> <?php ?>" readonly>
                 </div>
 
-                <button type="submit" class="btn btn-success" name="save" onclick="submitData()">เพิ่มข้อมูล</button>
+                <button type="submit" name="save" class="btn btn-success">เพิ่มข้อมูล</button>
                 <a type="button" class="btn btn-danger" href="deliver.php">ยกเลิก</a>
             </form>
         </div>
+        </div>
+                        
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
     </body>
 
@@ -200,7 +197,8 @@ if (!$_SESSION["UserID"]) {
         box-sizing: border-box;
     }
 
-    body {      
+    body {
+        height: 100vh;
         display: flex;
         justify-content: center;
         align-items: center;

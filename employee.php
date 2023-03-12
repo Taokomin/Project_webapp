@@ -79,16 +79,16 @@ if (!$_SESSION["UserID"]) {
                             <a class="nav-link active" href="deliver.php">ข้อมูลการส่งมอบสินค้า</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="#">ข้อมูลการสั่งซื้อวัสดุและอุปกรณ์</a>
+                            <a class="nav-link active" href="buy_material.php">ข้อมูลการสั่งซื้อวัสดุและอุปกรณ์</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="#">ข้อมูลการรับเข้าวัสดุและอุปกรณ์</a>
+                            <a class="nav-link active" href="accept_material.php">ข้อมูลการรับเข้าวัสดุและอุปกรณ์</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="#">ข้อมูลการเบิกวัสดุและอุปกรณ์</a>
+                            <a class="nav-link active" href="pickup_material.php">ข้อมูลการเบิกวัสดุและอุปกรณ์</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="#">ข้อมูลการรับคืนวัสดุและอุปกรณ์</a>
+                            <a class="nav-link active" href="takeback.php">ข้อมูลการรับคืนวัสดุและอุปกรณ์</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link active" href="#">การออกรายงาน</a>
@@ -134,12 +134,12 @@ if (!$_SESSION["UserID"]) {
                     <?php
                     include('condb.php');
                     $query = "
-                SELECT e.*, n.prefix_name, t.employee_type_name
-                FROM tb_employee as e
-                INNER JOIN tb_nameprefix as n ON e.ref_nameprefix_number = n.prefix_number
-                INNER JOIN tb_employee_type as t ON e.ref_employee_type_number = t.employee_type_number
-                ORDER BY n.prefix_number ASC, t.employee_type_name ASC;
-                ";
+                    SELECT e.*, n.prefix_name, t.employee_type_name
+                    FROM tb_employee as e
+                    INNER JOIN tb_nameprefix as n ON e.ref_nameprefix_number = n.prefix_number
+                    INNER JOIN tb_employee_type as t ON e.ref_employee_type_number = t.employee_type_number
+                    ORDER BY n.prefix_number ASC, t.employee_type_name ASC;
+                    ";
                     $result = mysqli_query($con, $query);
                     while ($values = mysqli_fetch_assoc($result)) {
                     ?>
