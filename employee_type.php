@@ -91,7 +91,7 @@ if (!$_SESSION["UserID"]) {
                             <a class="nav-link active" href="takeback.php">ข้อมูลการรับคืนวัสดุและอุปกรณ์</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="#">การออกรายงาน</a>
+                            <a class="nav-link active" href="report.php">การออกรายงาน</a>
                         </li>
                     </ul>
                     </ul>

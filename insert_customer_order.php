@@ -70,7 +70,7 @@ if (!$_SESSION["UserID"]) {
             <hr>
             <form action="insert_customer_order_db.php" method="post">
                 <div class="mb-3">
-                    <label for="customer_order_id" class="form-label">รหัสลูกค้า</label>
+                    <label for="customer_order_id" class="form-label">รหัสสั่งซื้อสินค้าจากลูกค้า</label>
                     <input type="text" class="form-control" name="customer_order_id" value="<?php echo (increaseId($GLOBALS['customer_order_id'])); ?>" readonly>
                 </div>
                 <div class="mb-3">

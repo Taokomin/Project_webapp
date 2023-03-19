@@ -97,7 +97,7 @@ if (!$_SESSION["UserID"]) {
                     </script>
                 </div>
                 <div class="mb-3">
-                    <label for="searchInput" class="form-label">รหัสสั่งซื้อสินค้าจากลูกค้า</label>
+                    <label for="searchInput" class="form-label">รหัสการรับเข้าวัสดุและอุปกรณ์</label>
                     <select class="form-select" aria-label="Default select example" name="ref_buy_material_id" required>
                         <option value="<?php if (isset($_GET['ref_buy_material_id'])) {
                                             echo $_GET['ref_buy_material_id'];

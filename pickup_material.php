@@ -89,12 +89,11 @@ if (!$_SESSION["UserID"]){
                         <a class="nav-link active" href="pickup_material.php">ข้อมูลการเบิกวัสดุและอุปกรณ์</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="takeback.php">ข้อมูลการรับคืนวัสดุและอุปกรณ์</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#">การออกรายงาน</a>
-                    </li>
-                </ul>
+                            <a class="nav-link active" href="takeback.php">ข้อมูลการรับคืนวัสดุและอุปกรณ์</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="report.php">การออกรายงาน</a>
+                        </li>
                 </ul>
             </div>
     </nav>
@@ -122,12 +121,12 @@ if (!$_SESSION["UserID"]){
             <tr>
                 <th>ลำดับ</th>
                 <th>รหัสเบิก</th>
-                <th>วั่นที่เบิก</th>
-                <th>รหัสวัสดุและอุปกรณ์</th>
+                <th>วันที่เบิก</th>
+                <th>วัสดุและอุปกรณ์</th>
                 <th>วัสดุและอุปกรณ์</th>
                 <th>จำนวน</th>
-                <th>รหัสหน่วยนับ</th>
-                <th>รหัสประเภทวัสดุและอุปกรณ์</th>
+                <th>หน่วยนับ</th>
+                <th>ประเภทวัสดุและอุปกรณ์</th>
                 <th>พนักงาน</th>
                 <th>สถานะ</th>
                 <th>การดำเนินการ</th>
@@ -135,13 +134,7 @@ if (!$_SESSION["UserID"]){
             <tbody>
                 <?php
                 include('condb.php');
-                // $query = "
-                // SELECT d.*, co.customer_order_detail
-                // FROM tb_deliver as d
-                // INNER JOIN tb_customer_order as co ON  d.ref_customer_order_number = co.customer_order_number
-                // ORDER BY co.customer_order_number ASC;
-                // ";
-                $query = "SELECT * FROM tb_pickup_material ORDER BY pickup_material_number asc" or die("Error:" . mysqli_error());
+                $query = "SELECT * FROM tb_pickup_material WHERE ref_pickup_material_status = 'รออนุมัติ' ORDER BY pickup_material_number asc" or die("Error:" . mysqli_error());
                 $result = mysqli_query($con, $query);
                 while ($values = mysqli_fetch_assoc($result)) {
                 ?>

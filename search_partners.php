@@ -1,3 +1,11 @@
+<?php session_start();?>
+<?php 
+ 
+if (!$_SESSION["UserID"]){
+ 
+	  Header("Location: index.php");
+ 
+}else{?>
 <!DOCTYPE html>
 <html lang="th9o08ikj #']">
 
@@ -22,9 +30,11 @@
                     <a>บริษัท คิว.ดี.อี. พรีซิชั่น พาร์ท จำกัด (Q.D.E Precision Part Co.ltd.)</a>
                 </li>
         </div>
-        <div class="">
-            <button type="button" class="btn btn-secondary btn-sm" disabled>กำหนดสิทธิ์</button>
-            <button type="button" class="btn btn-danger btn-sm">ออกจากระบบ</button>
+        <div>
+        <a><iconify-icon icon="gg:profile" width="32" height="32"></iconify-icon><?php echo ($_SESSION['User']);?> <?php ?></a>
+        </div>
+        <div >
+        <a type="button" class="btn btn-danger btn-sm" href="logout.php">ออกจากระบบ</a>
         </div>
     </nav>
     <div>
@@ -174,3 +184,4 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
 </body>
 </html>
+<?php }?>

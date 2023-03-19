@@ -51,11 +51,12 @@ if (!$_SESSION["UserID"]) {
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                ข้อมูลพื้นฐาน
+                                รายการอนุมัติ
                             </a>
                             <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
                                 <li><a class="dropdown-item" href="user.php">รหัสผ่าน</a></li>
-                                <li><a class="dropdown-item" href="approve.php">รายการอนุมัติ</a></li>
+                                <li><a class="dropdown-item" href="approve_buy_material.php">อนุมัติการสั่งซื้อวัสดุและอุปกรณ์</a></li>
+                                <li><a class="dropdown-item" href="approve_pickup_material.php">อนุมัติการเบิกวัสดุและอุปกรณ์</a></li>
                             </ul>
                         </li>
                     </ul>

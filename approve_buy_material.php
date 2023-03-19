@@ -1,12 +1,3 @@
-<?php
-if (isset($_GET['id']) && isset($_GET['status'])) {
-    $id = $_GET['id'];
-    $status = $_GET['status'];
-    mysqli_query($con, "update login set status='$status' where id='$id'");
-    header("location:index.php");
-    die();
-}
-?>
 <?php session_start(); ?>
 <?php
 
@@ -20,7 +11,7 @@ if (!$_SESSION["UserID"]) {
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>การจัดการข้อมูลการสั่งซื้อวัสดุและอุปกรณ์</title>
+        <title>การจัดการอนุมัติการสั่งซื้อวัสดุและอุปกรณ์</title>
         <link rel="stylesheet" href="mystyle.css">
         <link rel="stylesheet" href="welcome.css">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
@@ -56,51 +47,17 @@ if (!$_SESSION["UserID"]) {
                 <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link active" href="index.php">หน้าแรก</a>
+                            <a class="nav-link active" href="admin.php">หน้าแรก</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                ข้อมูลพื้นฐาน
+                                รายการอนุมัติ
                             </a>
                             <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                                <li><a class="dropdown-item" href="name_prefix.php">ข้อมูลคำนำหน้าชื่อ</a></li>
-                                <li><a class="dropdown-item" href="unit.php">ข้อมูลหน่วยนับ</a></li>
-                                <li><a class="dropdown-item" href="employee_type.php">ข้อมูลประเภทพนักงาน</a></li>
-                                <li><a class="dropdown-item" href="equipment_type.php">ข้อมูลประเภทวัสดุและอุปกรณ์</a></li>
+                                <li><a class="dropdown-item" href="user.php">รหัสผ่าน</a></li>
+                                <li><a class="dropdown-item" href="approve_buy_material.php">อนุมัติการสั่งซื้อวัสดุและอุปกรณ์</a></li>
+                                <li><a class="dropdown-item" href="approve_pickup_material.php">อนุมัติการเบิกวัสดุและอุปกรณ์</a></li>
                             </ul>
-                        </li>
-
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                ข้อมูลหลัก
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                                <li><a class="dropdown-item" href="customer.php">ข้อมูลลูกค้า</a></li>
-                                <li><a class="dropdown-item" href="employee.php">ข้อมูลพนักงาน</a></li>
-                                <li><a class="dropdown-item" href="equipment.php">ข้อมูลวัสดุและอุปกรณ์</a></li>
-                                <li><a class="dropdown-item" href="partners.php">ข้อมูลคู่ค้า</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="customer_order.php">ข้อมูลการสั่งซื้อสินค้าจากลูกค้า</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="deliver.php">ข้อมูลการส่งมอบสินค้า</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="buy_material.php">ข้อมูลการสั่งซื้อวัสดุและอุปกรณ์</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="accept_material.php">ข้อมูลการรับเข้าวัสดุและอุปกรณ์</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="#">ข้อมูลการเบิกวัสดุและอุปกรณ์</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="#">ข้อมูลการรับคืนวัสดุและอุปกรณ์</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="#">การออกรายงาน</a>
                         </li>
                     </ul>
                     </ul>
@@ -113,7 +70,7 @@ if (!$_SESSION["UserID"]) {
             <br>
             <br>
             <div class="col-md-7">
-                <form action="search_buy_material.php" method="POST">
+                <form action="sapprove_buy_material.php" method="POST">
                     <div class="input-group mb-3">
                         <input type="text" name="buy_material_data" required class="form-control" placeholder="กรอกชื่อที่ต้องการจะค้นหา...">
                         <button type="submit" class="btn btn-primary">ค้นหา</button>
@@ -127,7 +84,7 @@ if (!$_SESSION["UserID"]) {
                         <th>ลำดับ</th>
                         <th>รหัสสั่งซื้อวัสดุและอุปกรณ์</th>
                         <th>วั่นที่สั่งซื้อ</th>
-                        <th>รายละเอียดการสั่งซื้อวัสดุและอุปกรณ</th>
+                        <th>รายละเอียดการสั่งซื้อวัสดุและอุปกรณ์</th>
                         <th>วัสดุและอุปกรณ์</th>
                         <th>จำนวน</th>
                         <th>หน่วยนับ</th>
@@ -147,6 +104,7 @@ if (!$_SESSION["UserID"]) {
                         INNER JOIN tb_equipment_type as et ON bm.ref_equipment_type = et.equipment_type_number
                         INNER JOIN tb_partners as p ON bm.ref_partners_number = p.partners_number
                         ORDER BY eq.equipment_number, u.unit_number, et.equipment_type_number, p.partners_number asc" or die("Error:" . mysqli_error());
+
                         $result = mysqli_query($con, $query);
                         while ($values = mysqli_fetch_assoc($result)) {
                         ?>
@@ -163,11 +121,8 @@ if (!$_SESSION["UserID"]) {
                                 <td><?php echo $values["partners_fname"]; ?></td>
                                 <td><?php echo $values["buy_material_status"]; ?></td>
                                 <td>
-                                    <select onchange="status_update(this.options[this.selectedIndex].value,'<?php echo $values['id'] ?>')">
-                                        <option value="">อัปเดตสถานะ</option>
-                                        <option value="1">ไม่อนุมัติ</option>
-                                        <option value="2">อนุมัติ</option>
-                                    </select>
+                                <a href="yapprove_buy_material.php?buy_material_number=<?php echo $values['buy_material_number']; ?>" class="btn btn-primary"><iconify-icon icon="flat-color-icons:approve"></iconify-icon></a>
+                            <a onclick="return confirm('คุณแน่ใจหรือว่าต้องการลบรายการนี้?')" href="xapprove_buy_material.php?buy_material_number=<?php echo $values['buy_material_number']; ?>" class='btn btn-danger remove'><iconify-icon icon="flat-color-icons:disapprove"></iconify-icon></a>
                                 </td>
                             </tr>
                         <?php

@@ -91,7 +91,7 @@ if (!$_SESSION["UserID"]) {
                             <a class="nav-link active" href="takeback.php">ข้อมูลการรับคืนวัสดุและอุปกรณ์</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="#">การออกรายงาน</a>
+                            <a class="nav-link active" href="report.php">การออกรายงาน</a>
                         </li>
                     </ul>
                     </ul>
@@ -122,7 +122,7 @@ if (!$_SESSION["UserID"]) {
                     <tr>
                         <th>ลำดับ</th>
                         <th>รหัสสั่งซื้อวัสดุและอุปกรณ์</th>
-                        <th>วั่นที่สั่งซื้อ</th>
+                        <th>วันที่สั่งซื้อ</th>
                         <th>รายละเอียดการสั่งซื้อวัสดุและอุปกรณ์</th>
                         <th>วัสดุและอุปกรณ์</th>
                         <th>จำนวน</th>
@@ -160,6 +160,7 @@ if (!$_SESSION["UserID"]) {
                                 <td><?php echo $values["partners_fname"]; ?></td>
                                 <td><?php echo $values["buy_material_status"]; ?></td>
                                 <td>
+                                    <a href="buy_material_pdf.php?buy_material_number=<?php echo $values['buy_material_number']; ?>" class="btn btn-warning"><iconify-icon icon="bxs:file-pdf"></iconify-icon></a>
                                     <a href="update_buy_material.php?buy_material_number=<?php echo $values['buy_material_number']; ?>" class="btn btn-primary"><iconify-icon icon="el:file-edit"></iconify-icon></a>
                                     <a onclick="return confirm('คุณแน่ใจหรือว่าต้องการลบรายการนี้?')" href="delete_buy_material.php?buy_material_number=<?php echo $values['buy_material_number']; ?>" class="btn btn-danger remove"><iconify-icon icon="ant-design:delete-outlined"></iconify-icon></a>
                                 </td>

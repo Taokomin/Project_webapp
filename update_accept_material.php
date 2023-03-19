@@ -36,7 +36,7 @@ if (!$_SESSION["UserID"]) {
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>เพิ่มข้อมูลการรับเข้าวัสดุและอุปกรณ์</title>
+        <title>แก้ไขข้อมูลการรับเข้าวัสดุและอุปกรณ์</title>
         <link rel="stylesheet" href="style1.css">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
     </head>
@@ -44,7 +44,7 @@ if (!$_SESSION["UserID"]) {
     <body>
 
         <div class="container">
-            <h1 class="mt-5">เพิ่มข้อมูลการรับเข้าวัสดุและอุปกรณ์</h1>
+            <h1 class="mt-5">แก้ไขข้อมูลการรับเข้าวัสดุและอุปกรณ์</h1>
             <hr>
             <form action="insert_accept_material_db.php" method="post">
             <input type="hidden" value="<?php echo $values["accept_material_number"]; ?>" name="accept_material_number">
@@ -129,7 +129,7 @@ if (!$_SESSION["UserID"]) {
                         <label for="ref_employee_number" class="form-label">ชื่อพนักงาน</label>
                         <input type="text" class="form-control" name="ref_employee_number" value="<?php echo ($_SESSION['User']); ?> <?php ?>" readonly>
                     </div>
-                <button type="submit" name="save" class="btn btn-success">เพิ่มข้อมูล</button>
+                <button type="submit" name="save" class="btn btn-success">แก้ไขข้อมูล</button>
                 <a type="button" class="btn btn-danger" href="accept_material.php">ยกเลิก</a>
             </form>
         </div>
@@ -149,7 +149,7 @@ if (!$_SESSION["UserID"]) {
   }
 
   body {
-    height: 100vh;
+    
     display: flex;
     justify-content: center;
     align-items: center;

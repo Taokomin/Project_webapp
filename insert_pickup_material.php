@@ -3,7 +3,7 @@ include('condb.php');
 if (!$con) mysqli_connect_errno();
 
 $GLOBALS['maxIdLength'] = 3;
-$GLOBALS['deliver_number'] = '0';
+$GLOBALS['pickup_material_number'] = '0';
 
 $sql = "SELECT pickup_material_id FROM tb_pickup_material ORDER BY pickup_material_id DESC LIMIT 1";
 $query = $con->query($sql);
@@ -72,11 +72,11 @@ if (!$_SESSION["UserID"]) {
 
 
                 <div class="mb-3">
-                    <label for="pickup_material_id" class="form-label">รหัสส่งมอบ</label>
+                    <label for="pickup_material_id" class="form-label">รหัสเบิก</label>
                     <input type="text" class="form-control" name="pickup_material_id" value="<?php echo (increaseId($GLOBALS['pickup_material_id'])); ?>" readonly>
                 </div>
                 <div class="mb-3">
-                    <label for="pickup_material_day" class="form-label">วันที่ส่งมอบ</label>
+                    <label for="pickup_material_day" class="form-label">วั่นที่เบิก</label>
                     <input type="date" class="form-control" name="pickup_material_day" id="pickup_material_day" value="<?php echo date('Y-m-d'); ?>" required>
                     <script type='text/javascript'>
                         var highlight_dates = ['1-5-2020', '11-5-2020', '18-5-2020', '28-5-2020'];
@@ -101,7 +101,7 @@ if (!$_SESSION["UserID"]) {
                     </script>
                 </div>
                 <div class="mb-3">
-                    <label for="searchInput" class="form-label">รหัสสั่งซื้อสินค้าจากลูกค้า</label>
+                    <label for="searchInput" class="form-label">รหัสวัสดุและอุปกรณ์</label>
                     <select class="form-select" aria-label="Default select example" name="ref_equipment_id" required>
                         <option value="<?php if (isset($_GET['ref_equipment_id'])) {
                                             echo $_GET['ref_equipment_id'];
@@ -177,10 +177,10 @@ if (!$_SESSION["UserID"]) {
                     <label for="ref_employee_number" class="form-label">ชื่อพนักงาน</label>
                     <input type="text" class="form-control" name="ref_employee_number" value="<?php echo ($_SESSION['User']); ?> <?php ?>" readonly>
                 </div>
-                <div class="mb-3">
-                    <label for="ref_pickup_material_status" class="form-label">สถานะ</label>
-                    <input type="text" class="form-control" name="ref_pickup_material_status" value="รออนุมัติ" readonly>
-                </div>
+                    <div class="mb-3">
+                        <label for="ref_pickup_material_status" class="form-label">สถานะ</label>
+                        <input type="text" class="form-control" name="ref_pickup_material_status" value="รออนุมัติ" readonly>
+                    </div>
                 <button type="submit" class="btn btn-success" name="save" onclick="submitData()">เพิ่มข้อมูล</button>
                 <a type="button" class="btn btn-danger" href="pickup_material.php">ยกเลิก</a>
             </form>

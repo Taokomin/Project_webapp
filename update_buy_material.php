@@ -37,7 +37,7 @@ if (!$_SESSION["UserID"]) {
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>เพิ่มข้อมูลการสั่งซื้อสินค้าจากลูกค้า</title>
+        <title>แก้ไขข้อมูลการสั่งซื้อวัสดุและอุปกรณ์</title>
         <link rel="stylesheet" href="style1.css">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
     </head>
@@ -45,7 +45,7 @@ if (!$_SESSION["UserID"]) {
     <body>
 
         <div class="container">
-            <h1 class="mt-5">เพิ่มข้อมูลการสั่งซื้อสินค้าจากลูกค้า</h1>
+            <h1 class="mt-5">แก้ไขข้อมูลการสั่งซื้อวัสดุและอุปกรณ์</h1>
             <hr>
             <form action="insert_buy_material_db.php" method="post">
             <input type="hidden" value="<?php echo $values["buy_material_number"]; ?>" name="buy_material_number">
@@ -138,7 +138,7 @@ if (!$_SESSION["UserID"]) {
                     <label for="buy_material_status" class="form-label">สถานะ</label>
                     <input type="text" class="form-control" name="buy_material_status" value="รออนุมัติ" readonly>
                 </div>
-                <button type="submit" name="save" class="btn btn-success">เพิ่มข้อมูล</button>
+                <button type="submit" name="save" class="btn btn-success">แก้ไขข้อมูล</button>
                 <a type="button" class="btn btn-danger" href="buy_material.php">ยกเลิก</a>
             </form>
         </div>

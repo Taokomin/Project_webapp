@@ -32,7 +32,7 @@ if (!$_SESSION["UserID"]) {
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>เพิ่มข้อมูลการส่งมอบสินค้า</title>
+        <title>แก้ไขข้อมูลการส่งมอบสินค้า</title>
         <link rel="stylesheet" href="style1.css">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -42,10 +42,10 @@ if (!$_SESSION["UserID"]) {
 
     <body>
         <div class="container">
-            <h1 class="mt-5">เพิ่มข้อมูลการเบิกวัสดุและอุปกรณ์</h1>
+            <h1 class="mt-5">แก้ไขข้อมูลการเบิกวัสดุและอุปกรณ์</h1>
             <hr>
             <form action="update_pickup_material_db.php" method="post">
-
+            <input type="hidden" value="<?php echo $values["pickup_material_number"]; ?>" name="pickup_material_number">
 
                 <div class="mb-3">
                     <label for="pickup_material_id" class="form-label">รหัสส่งมอบ</label>
@@ -109,7 +109,7 @@ if (!$_SESSION["UserID"]) {
                     <label for="ref_pickup_material_status" class="form-label">สถานะ</label>
                     <input type="text" class="form-control" name="ref_pickup_material_status" value="รออนุมัติ" required>
                 </div>
-                <button type="submit" class="btn btn-success" name="save">เพิ่มข้อมูล</button>
+                <button type="submit" class="btn btn-success" name="save">แก้ไขข้อมูล</button>
                 <a type="button" class="btn btn-danger" href="pickup_material.php">ยกเลิก</a>
             </form>
         </div>
